@@ -362,6 +362,14 @@ body {
   text-align: center;
 }
 
+.window-game .visual-quiz-header {
+  justify-content: center;
+}
+.window-game .visual-quiz-header > div {
+  width: 100%;
+  text-align: center;
+}
+
 .wg-story {
   font-size: 1.05rem;
   font-weight: 500;
