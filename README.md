@@ -13,7 +13,6 @@ Web aplikacija za učenje razlomaka. Pokriva deset čestih miskoncepcija: razlom
 Nije potreban build. Otvori `index.html` u pregledniku ili pokreni lokalni poslužitelj:
 
 ```powershell
-cd C:\Users\Lana\Projects\razloMAK
 python -m http.server 8080
 ```
 
