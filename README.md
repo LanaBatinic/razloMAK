@@ -27,7 +27,7 @@ razloMAK/
 ├── css/styles.css
 └── js/
     ├── app.js       # Sučelje i logika načina rada
-    ├── topics.js    # Deset cjelina (zablude) i generatori zadataka
+    ├── topics.js    # Deset cjelina i generatori zadataka
     ├── fraction.js  # Matematičke funkcije
     └── visual.js    # Crtanje na canvasu
 ```
