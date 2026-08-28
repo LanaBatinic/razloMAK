@@ -19,8 +19,6 @@ python -m http.server 8080
 
 Zatim otvori [http://localhost:8080](http://localhost:8080).
 
-> **Napomena:** ES moduli moraju se učitavati preko HTTP-a (ne `file://`). Koristi naredbu iznad ili Cursor Live Server.
-
 ## Struktura projekta
 
 ```
