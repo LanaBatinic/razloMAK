@@ -1,11 +1,11 @@
 # razloMAK
 
-Web aplikacija za učenje razlomaka. Pokriva deset čestih zabluda: razlomak kao jedan broj, brojnik i nazivnik, zbrajanje dijelova, usporedbu, jednake razlomke, odnos prema cijelom broju, mješovite brojeve, provjeru smisla, slikovne modele i prenošenje pravila cijelih brojeva.
+Web aplikacija za učenje razlomaka. Pokriva deset čestih miskoncepcija: razlomak kao jedan broj, brojnik i nazivnik, zbrajanje dijelova, usporedbu, jednake razlomke, odnos prema cijelom broju, mješovite brojeve, provjeru smisla, slikovne modele i prenošenje pravila cijelih brojeva.
 
 ## Značajke
 
 - **Vizualiziraj** — Kružni i trakasti modeli, brojevni pravac, decimalni i mješoviti zapis
-- **Vježbe** — Deset kategorija (po jedna za svaku zabludu), svaka s 8 zadataka
+- **Vježbe** 
 - **Kviz** — 10 pitanja, po jedno iz svake kategorije
 
 ## Pokretanje
