@@ -30,4 +30,10 @@ razloMAK/
     ├── topics.js    # Deset cjelina i generatori zadataka
     ├── fraction.js  # Matematičke funkcije
     └── visual.js    # Crtanje na canvasu
+    └── candy-quiz.js
+    └── flower-sub-game.js
+    └── mul-garden-game.js
+    └── pizza-mixed-game.js
+    └── window-compare-game.js
+    └── window-game.js
 ```
