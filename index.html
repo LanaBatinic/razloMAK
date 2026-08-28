@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>razloMAK — Uči razlomke</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=46">
+</head>
+<body>
+  <div class="field-bg" aria-hidden="true">
+    <svg class="mak-bloom mak-bloom--1" viewBox="0 0 120 160" fill="none">
+      <path d="M60 55 C45 35 20 40 30 60 C15 55 10 75 28 78 C18 95 38 100 48 88 C42 108 62 115 60 95 C68 115 88 108 82 88 C92 100 102 95 92 78 C110 75 105 55 90 60 C100 40 75 35 60 55Z" fill="var(--mak-petal)"/>
+      <circle cx="60" cy="72" r="14" fill="var(--mak-center)"/>
+      <path d="M58 95 Q60 130 60 155" stroke="var(--mak-stem)" stroke-width="4" stroke-linecap="round"/>
+      <path d="M60 115 Q35 105 25 90" stroke="var(--mak-leaf)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M60 125 Q85 115 95 100" stroke="var(--mak-leaf)" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <svg class="mak-bloom mak-bloom--2" viewBox="0 0 120 160" fill="none">
+      <path d="M60 55 C45 35 20 40 30 60 C15 55 10 75 28 78 C18 95 38 100 48 88 C42 108 62 115 60 95 C68 115 88 108 82 88 C92 100 102 95 92 78 C110 75 105 55 90 60 C100 40 75 35 60 55Z" fill="var(--mak-petal-light)"/>
+      <circle cx="60" cy="72" r="12" fill="var(--mak-center)"/>
+      <path d="M58 95 Q60 130 60 155" stroke="var(--mak-stem)" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <svg class="mak-bloom mak-bloom--3" viewBox="0 0 120 160" fill="none">
+      <path d="M60 55 C45 35 20 40 30 60 C15 55 10 75 28 78 C18 95 38 100 48 88 C42 108 62 115 60 95 C68 115 88 108 82 88 C92 100 102 95 92 78 C110 75 105 55 90 60 C100 40 75 35 60 55Z" fill="var(--mak-petal)"/>
+      <circle cx="60" cy="72" r="10" fill="var(--mak-center)"/>
+      <path d="M58 95 Q60 125 60 145" stroke="var(--mak-stem)" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <div class="field-grass"></div>
+  </div>
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" class="logo-poppy">
+            <path d="M32 22 C26 12 14 14 18 24 C10 22 8 34 16 36 C12 44 22 46 26 40 C22 50 34 52 32 44 C36 52 48 50 44 40 C52 46 56 44 48 36 C56 34 54 22 46 24 C50 14 38 12 32 22Z" fill="#c41e3a"/>
+            <circle cx="32" cy="30" r="7" fill="#1a1a1a"/>
+            <path d="M31 40 L32 58" stroke="#2d6a4f" stroke-width="3" stroke-linecap="round"/>
+            <path d="M32 48 Q18 44 12 36" stroke="#40916c" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M32 50 Q46 46 52 38" stroke="#40916c" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div>
+          <h1>razloMAK</h1>
+          <p class="tagline">Uči razlomke na zabavan način</p>
+        </div>
+      </div>
+      <nav class="nav" id="nav">
+        <button class="nav-btn active" data-mode="visual">Vizualizacija</button>
+        <button class="nav-btn" data-mode="compare">Usporedba</button>
+        <button class="nav-btn" data-mode="ops">Računske operacije</button>
+        <button class="nav-btn" data-mode="mixed">Mješoviti brojevi</button>
+        <button class="nav-btn" data-mode="quiz">Kviz</button>
+      </nav>
+    </header>
+
+    <main class="main">
+      <!-- VISUAL MODE -->
+      <section class="mode active" id="mode-visual">
+        <div class="mode-header">
+          <h2>Vizualizacija</h2>
+          <p>Pomakni klizače na željeni broj i gledaj kako se mijenjaju modeli. Možeš ići i preko cjeline.</p>
+        </div>
+        <div class="visual-layout">
+          <div class="controls-panel card">
+            <div class="fraction-display frac-stack" id="visual-fraction"></div>
+            <div class="slider-group">
+              <label for="visual-num">Brojnik (gore)</label>
+              <input type="range" id="visual-num" min="0" max="16" value="1">
+              <span class="slider-value" id="visual-num-val">1</span>
+            </div>
+            <div class="slider-group">
+              <label for="visual-den">Nazivnik (dolje)</label>
+              <input type="range" id="visual-den" min="1" max="12" value="2">
+              <span class="slider-value" id="visual-den-val">2</span>
+            </div>
+            <div class="stats-grid">
+              <div class="stat"><span class="stat-label">Decimalni broj</span><span class="stat-value" id="visual-decimal">0.5</span></div>
+              <div class="stat"><span class="stat-label">Skraćeno</span><span class="stat-value" id="visual-simplified">1/2</span></div>
+              <div class="stat"><span class="stat-label">Mješoviti zapis</span><span class="stat-value" id="visual-mixed">1/2</span></div>
+            </div>
+          </div>
+          <div class="visuals-panel">
+            <div class="card visual-card">
+              <h3>Kružni model</h3>
+              <canvas id="pie-canvas" width="420" height="200"></canvas>
+            </div>
+            <div class="card visual-card">
+              <h3>Trakasti model</h3>
+              <canvas id="bar-canvas" width="420" height="90"></canvas>
+            </div>
+            <div class="card visual-card visual-card--wide">
+              <h3>Brojevni pravac</h3>
+              <canvas id="line-canvas" width="640" height="90"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-quiz card" id="visual-quiz">
+          <div class="visual-quiz-header">
+            <div>
+              <h3>Prepoznaj razlomak</h3>
+              <p>Nazivnik pokazuje na koliko je jednakih dijelova krug podijeljen, a brojnik nam govori koliko takvih dijelova trebamo.</p>
+            </div>
+            <div class="visual-quiz-score">
+              <span>Točno: <strong id="vq-correct">0</strong></span>
+              <span>Pokušaja: <strong id="vq-total">0</strong></span>
+            </div>
+          </div>
+          <div class="visual-quiz-question">
+            Koji krug prikazuje razlomak <span class="vq-target frac-stack" id="vq-target"></span>?
+          </div>
+          <div class="visual-quiz-options" id="vq-options"></div>
+          <div class="feedback" id="vq-feedback"></div>
+          <button class="btn btn-primary" id="vq-next" hidden>Sljedeći zadatak</button>
+        </div>
+
+        <div class="visual-quiz card" id="nl-quiz">
+          <div class="visual-quiz-header">
+            <div>
+              <h3>Označi na brojevnom pravcu</h3>
+              <p>Klikni na pravac točno na mjestu zadanog razlomka (od 0 do 1).</p>
+            </div>
+            <div class="visual-quiz-score">
+              <span>Točno: <strong id="nl-correct">0</strong></span>
+              <span>Pokušaja: <strong id="nl-total">0</strong></span>
+            </div>
+          </div>
+          <div class="visual-quiz-question">
+            Označi <span class="vq-target frac-stack" id="nl-target"></span> na brojevnom pravcu.
+          </div>
+          <div class="nl-canvas-wrap">
+            <div id="nl-line" class="nl-line" role="img" aria-label="Brojevni pravac od 0 do 1"></div>
+            <p class="nl-hint">Klikni na pravac da postaviš oznaku, zatim provjeri.</p>
+          </div>
+          <div class="nl-actions">
+            <button class="btn btn-primary" id="nl-check">Provjeri</button>
+            <button class="btn btn-secondary" id="nl-clear">Poništi oznaku</button>
+            <button class="btn btn-primary" id="nl-next" hidden>Sljedeći zadatak</button>
+          </div>
+          <div class="feedback" id="nl-feedback"></div>
+        </div>
+
+        <div class="visual-quiz card" id="candy-quiz">
+          <div class="visual-quiz-header">
+            <div>
+              <h3>Označi bombone</h3>
+              <p>Klikni točan broj bombona za zadani razlomak, zatim provjeri.</p>
+            </div>
+            <div class="visual-quiz-score">
+              <span>Točno: <strong id="cq-correct">0</strong></span>
+              <span>Pokušaja: <strong id="cq-total">0</strong></span>
+            </div>
+          </div>
+          <div class="visual-quiz-question" id="cq-question"></div>
+          <div class="cq-grid" id="cq-grid"></div>
+          <p class="cq-count" id="cq-count">Označeno: 0 bombona</p>
+          <p class="nl-hint">Klikni bombon da ga označiš. Klikni ponovo da skineš oznaku.</p>
+          <div class="nl-actions">
+            <button type="button" class="btn btn-primary" id="cq-check">Provjeri</button>
+            <button type="button" class="btn btn-primary" id="cq-next" hidden>Sljedeći zadatak</button>
+          </div>
+          <div class="feedback" id="cq-feedback"></div>
+          <div class="ops-arith-solution" id="cq-solution" hidden>
+            <p class="ops-arith-solution-title">Postupak rješavanja</p>
+            <div class="ops-arith-solution-steps" id="cq-solution-steps"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPARE MODE -->
+      <section class="mode" id="mode-compare">
+        <div class="mode-header">
+          <h2>Usporedba</h2>
+          <p>Odaberi znak &lt;, = ili &gt;. Ispod je igra: prenesi prozore na dvije zgrade i zaokruži tko stavi više.</p>
+        </div>
+        <div class="compare-quiz card">
+          <p class="compare-intro">Usporedi razlomke</p>
+          <div class="compare-problem-row" id="cmp-problem">
+            <div class="compare-frac-box">
+              <span class="frac-stack" id="cmp-frac-a"></span>
+            </div>
+            <span class="compare-q" id="cmp-q">?</span>
+            <div class="compare-frac-box">
+              <span class="frac-stack" id="cmp-frac-b"></span>
+            </div>
+          </div>
+          <div class="compare-guess-row" id="cmp-guess">
+            <button type="button" class="vq-option cmp-guess-btn" data-cmp="-1" aria-label="Manji">
+              <span class="cmp-guess-symbol">&lt;</span>
+            </button>
+            <button type="button" class="vq-option cmp-guess-btn" data-cmp="0" aria-label="Jednaki">
+              <span class="cmp-guess-symbol">=</span>
+            </button>
+            <button type="button" class="vq-option cmp-guess-btn" data-cmp="1" aria-label="Veći">
+              <span class="cmp-guess-symbol">&gt;</span>
+            </button>
+          </div>
+          <div class="feedback" id="cmp-feedback"></div>
+          <div class="compare-visuals-wrap" id="cmp-visuals" hidden>
+            <div class="compare-pies-row">
+              <div class="compare-pie-col">
+                <div class="vq-option compare-pie-card">
+                  <canvas id="cmp-canvas-a" width="160" height="160"></canvas>
+                </div>
+                <span class="vq-option-label" id="cmp-label-a">2/3</span>
+              </div>
+              <span class="compare-pies-symbol" id="cmp-visual-symbol">&lt;</span>
+              <div class="compare-pie-col">
+                <div class="vq-option compare-pie-card">
+                  <canvas id="cmp-canvas-b" width="160" height="160"></canvas>
+                </div>
+                <span class="vq-option-label" id="cmp-label-b">4/8</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="cmp-next" hidden>Sljedeći zadatak</button>
+        </div>
+
+        <div class="window-game window-game--compare card" id="window-compare-game">
+          <div class="visual-quiz-header">
+            <div>
+              <h3>Igra: tko stavi više prozora?</h3>
+              <p>Na svaku zgradu prenesi točan broj prozora, pa zaokruži tko stavi više.</p>
+            </div>
+          </div>
+          <p class="wg-story" id="wcg-story"></p>
+          <div class="wcg-arena">
+            <article class="wcg-player wcg-player--a" data-player="a">
+              <p class="wcg-name" id="wcg-name-a">Ivan</p>
+              <div class="wg-building" id="wcg-building-a">
+                <div class="wg-roof" aria-hidden="true"></div>
+                <div class="wg-facade">
+                  <div class="wg-slots" id="wcg-slots-a"></div>
+                  <div class="wg-door" aria-hidden="true"></div>
+                </div>
+              </div>
+              <p class="wg-count" id="wcg-count-a">Na zgradi: 0 prozora</p>
+              <p class="wg-label" id="wcg-pool-label-a">Prozori za Ivan</p>
+              <div class="wg-pool" id="wcg-pool-a"></div>
+            </article>
+            <article class="wcg-player wcg-player--b" data-player="b">
+              <p class="wcg-name" id="wcg-name-b">Marko</p>
+              <div class="wg-building" id="wcg-building-b">
+                <div class="wg-roof" aria-hidden="true"></div>
+                <div class="wg-facade">
+                  <div class="wg-slots" id="wcg-slots-b"></div>
+                  <div class="wg-door" aria-hidden="true"></div>
+                </div>
+              </div>
+              <p class="wg-count" id="wcg-count-b">Na zgradi: 0 prozora</p>
+              <p class="wg-label" id="wcg-pool-label-b">Prozori za Marko</p>
+              <div class="wg-pool" id="wcg-pool-b"></div>
+            </article>
+          </div>
+          <p class="wg-hint">Povuci ili klikni prozore na odgovarajuću zgradu. Zatim zaokruži tko stavi više.</p>
+          <p class="wcg-who-q">Koji stavi više prozora u jednom danu?</p>
+          <div class="compare-guess-row wcg-who-row">
+            <button type="button" class="vq-option wcg-who-btn" data-who="a" id="wcg-who-a">Ivan</button>
+            <button type="button" class="vq-option wcg-who-btn" data-who="eq">Jednako</button>
+            <button type="button" class="vq-option wcg-who-btn" data-who="b" id="wcg-who-b">Marko</button>
+          </div>
+          <button type="button" class="btn btn-primary" id="wcg-check">Provjeri</button>
+          <div class="feedback" id="wcg-feedback"></div>
+          <div class="ops-arith-solution" id="wcg-solution" hidden>
+            <p class="ops-arith-solution-title">Postupak rješavanja</p>
+            <div class="ops-arith-solution-steps" id="wcg-solution-steps"></div>
+          </div>
+          <button type="button" class="btn btn-primary" id="wcg-next" hidden>Sljedeći zadatak</button>
+        </div>
+      </section>
+
+      <!-- RAČUNSKE OPERACIJE -->
+      <section class="mode" id="mode-ops">
+        <div class="mode-header">
+          <h2>Računske operacije</h2>
+          <p>Odaberi vrstu operacije i riješi zadatke korak po korak.</p>
+        </div>
+        <nav class="sub-nav" id="ops-nav" aria-label="Vrsta operacije">
+          <button type="button" class="sub-nav-btn active" data-op="add">Zbrajanje</button>
+          <button type="button" class="sub-nav-btn" data-op="sub">Oduzimanje</button>
+          <button type="button" class="sub-nav-btn" data-op="mul">Množenje</button>
+          <button type="button" class="sub-nav-btn" data-op="div">Djeljenje</button>
+        </nav>
+        <div class="ops-panel active" id="ops-add">
+          <div class="ops-arith-quiz card">
+            <p class="ops-arith-intro">Zadana su dva razlomka — zbroji ih i upiši rezultat.</p>
+            <div class="ops-arith-problem-row" id="add-problem">
+              <div class="compare-frac-box">
+                <span class="frac-stack" id="add-frac-a"></span>
+              </div>
+              <span class="ops-arith-op">+</span>
+              <div class="compare-frac-box">
+                <span class="frac-stack" id="add-frac-b"></span>
+              </div>
+              <span class="ops-arith-eq">=</span>
+              <div class="ops-arith-answer-box">
+                <input type="number" class="ops-arith-input" id="add-ans-num" min="0" step="1" inputmode="numeric" aria-label="Brojnik odgovora">
+                <span class="ops-arith-frac-line" aria-hidden="true"></span>
+                <input type="number" class="ops-arith-input" id="add-ans-den" min="1" step="1" inputmode="numeric" aria-label="Nazivnik odgovora">
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="add-check">Provjeri</button>
+            <div class="feedback" id="add-feedback"></div>
+            <div class="ops-arith-solution" id="add-solution" hidden>
+              <p class="ops-arith-solution-title">Postupak rješavanja</p>
+              <p class="ops-arith-solution-text" id="add-solution-text"></p>
+            </div>
+            <button type="button" class="btn btn-primary" id="add-next" hidden>Sljedeći zadatak</button>
+          </div>
+
+          <div class="window-game card" id="window-game">
+            <div class="visual-quiz-header">
+              <div>
+                <h3>Igra: prozori na zgradi</h3>
+                <p>Izračunaj koliko prozora stave zajedno, pa prenesi točan broj na zgradu.</p>
+              </div>
+            </div>
+            <p class="wg-story" id="wg-story"></p>
+            <div class="wg-arena">
+              <div class="wg-building-wrap">
+                <p class="wg-label">Zgrada</p>
+                <div class="wg-building" id="wg-building">
+                  <div class="wg-roof" aria-hidden="true"></div>
+                  <div class="wg-facade">
+                    <div class="wg-slots" id="wg-slots"></div>
+                    <div class="wg-door" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <p class="wg-count" id="wg-count">Na zgradi: 0 prozora</p>
+              </div>
+              <div class="wg-pool-wrap">
+                <p class="wg-label">Prozori za postavljanje</p>
+                <div class="wg-pool" id="wg-pool"></div>
+              </div>
+            </div>
+            <p class="wg-hint">Povuci ili klikni prozor da ga preneseš na zgradu. Klikni ponovo da ga vratiš.</p>
+            <button type="button" class="btn btn-primary" id="wg-check">Provjeri</button>
+            <div class="feedback" id="wg-feedback"></div>
+            <div class="ops-arith-solution" id="wg-solution" hidden>
+              <p class="ops-arith-solution-title">Postupak rješavanja</p>
+              <div class="ops-arith-solution-steps" id="wg-solution-steps"></div>
+            </div>
+            <button type="button" class="btn btn-primary" id="wg-next" hidden>Sljedeći zadatak</button>
+          </div>
+        </div>
+        <div class="ops-panel" id="ops-sub">
+          <div class="ops-arith-quiz card">
+            <p class="ops-arith-intro">Zadana su dva razlomka — oduzmi ih i upiši rezultat.</p>
+            <div class="ops-arith-problem-row" id="sub-problem">
+              <div class="compare-frac-box">
+                <span class="frac-stack" id="sub-frac-a"></span>
+              </div>
+              <span class="ops-arith-op">−</span>
+              <div class="compare-frac-box">
+                <span class="frac-stack" id="sub-frac-b"></span>
+              </div>
+              <span class="ops-arith-eq">=</span>
+              <div class="ops-arith-answer-box">
+                <input type="number" class="ops-arith-input" id="sub-ans-num" min="0" step="1" inputmode="numeric" aria-label="Brojnik odgovora">
+                <span class="ops-arith-frac-line" aria-hidden="true"></span>
+                <input type="number" class="ops-arith-input" id="sub-ans-den" min="1" step="1" inputmode="numeric" aria-label="Nazivnik odgovora">
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="sub-check">Provjeri</button>
+            <div class="feedback" id="sub-feedback"></div>
+            <div class="ops-arith-solution" id="sub-solution" hidden>
+              <p class="ops-arith-solution-title">Postupak rješavanja</p>
+              <p class="ops-arith-solution-text" id="sub-solution-text"></p>
+            </div>
+            <button type="button" class="btn btn-primary" id="sub-next" hidden>Sljedeći zadatak</button>
+          </div>
+
+          <div class="window-game flower-game card" id="flower-sub-game">
+            <div class="visual-quiz-header">
+              <div>
+                <h3>Igra: cvjetovi maka</h3>
+                <p>Podijeli cvjetove, pa u kućicu upiši koliko ostaje Mari.</p>
+              </div>
+            </div>
+            <p class="wg-story" id="fg-story"></p>
+            <div class="fg-arena">
+              <article class="fg-person fg-person--mara" data-who="mara">
+                <p class="fg-name" id="fg-name-mara">Mara</p>
+                <div class="fg-basket" id="fg-basket-mara"></div>
+                <p class="fg-count" id="fg-count-mara">Mara: 0 cvjetova</p>
+              </article>
+              <article class="fg-person fg-person--a" data-who="a">
+                <p class="fg-name" id="fg-name-a">Lucija</p>
+                <div class="fg-basket" id="fg-basket-a"></div>
+                <p class="fg-count" id="fg-count-a">Lucija: 0 cvjetova</p>
+              </article>
+              <article class="fg-person fg-person--b" data-who="b">
+                <p class="fg-name" id="fg-name-b">Tea</p>
+                <div class="fg-basket" id="fg-basket-b"></div>
+                <p class="fg-count" id="fg-count-b">Tea: 0 cvjetova</p>
+              </article>
+            </div>
+            <p class="wg-hint">Povuci cvijet od jedne osobe do druge. Možeš i kliknuti cvijet, pa kliknuti košaricu.</p>
+            <div class="fg-answer-row">
+              <label class="fg-answer-label" for="fg-answer">Koliko cvjetova ostaje Mari?</label>
+              <div class="ops-arith-answer-box fg-answer-box">
+                <input type="number" class="ops-arith-input" id="fg-answer" min="0" step="1" inputmode="numeric" aria-label="Broj cvjetova koji ostaju Mari">
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="fg-check">Provjeri</button>
+            <div class="feedback" id="fg-feedback"></div>
+            <div class="ops-arith-solution" id="fg-solution" hidden>
+              <p class="ops-arith-solution-title">Postupak rješavanja</p>
+              <div class="ops-arith-solution-steps" id="fg-solution-steps"></div>
+            </div>
+            <button type="button" class="btn btn-primary" id="fg-next" hidden>Sljedeći zadatak</button>
+          </div>
+        </div>
+        <div class="ops-panel" id="ops-mul">
+          <div class="ops-arith-quiz card">
+            <p class="ops-arith-intro">Zadana su dva razlomka — pomnoži ih i upiši rezultat.</p>
+            <div class="ops-arith-problem-row" id="mul-problem">
+              <div class="compare-frac-box">
+                <span class="frac-stack" id="mul-frac-a"></span>
+              </div>
+              <span class="ops-arith-op">×</span>
+              <div class="compare-frac-box">
+                <span class="frac-stack" id="mul-frac-b"></span>
+              </div>
+              <span class="ops-arith-eq">=</span>
+              <div class="ops-arith-answer-box">
+                <input type="number" class="ops-arith-input" id="mul-ans-num" min="0" step="1" inputmode="numeric" aria-label="Brojnik odgovora">
+                <span class="ops-arith-frac-line" aria-hidden="true"></span>
+                <input type="number" class="ops-arith-input" id="mul-ans-den" min="1" step="1" inputmode="numeric" aria-label="Nazivnik odgovora">
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="mul-check">Provjeri</button>
+            <div class="feedback" id="mul-feedback"></div>
+            <div class="ops-arith-solution" id="mul-solution" hidden>
+              <p class="ops-arith-solution-title">Postupak rješavanja</p>
+              <div id="mul-solution-steps"></div>
+            </div>
+            <button type="button" class="btn btn-primary" id="mul-next" hidden>Sljedeći zadatak</button>
+          </div>
+
+          <div class="window-game mul-garden-game card" id="mul-garden-game">
+            <div class="visual-quiz-header">
+              <div>
+                <h3>Igra: vrt maka</h3>
+                <p>Prvo označi dio gredice, zatim od toga uzmi još jedan dio.</p>
+              </div>
+            </div>
+            <p class="wg-story" id="mg-story"></p>
+            <p class="mg-step" id="mg-step"></p>
+            <div class="mg-bed" id="mg-bed" role="group" aria-label="Gredica maka"></div>
+            <p class="mg-count" id="mg-count">Označeno: 0 cvjetova</p>
+            <p class="wg-hint" id="mg-hint">Klikni cvijet da ga označiš. Klikni ponovo da skineš oznaku.</p>
+            <button type="button" class="btn btn-primary" id="mg-phase">Dalje</button>
+            <div class="mg-frac-wrap" id="mg-frac-wrap" hidden>
+              <p class="pg-frac-q" id="mg-frac-q"></p>
+              <div class="ops-arith-answer-box pg-frac-box">
+                <input type="number" class="ops-arith-input" id="mg-frac-num" min="0" step="1" inputmode="numeric" aria-label="Brojnik umnoška">
+                <span class="ops-arith-frac-line" aria-hidden="true"></span>
+                <input type="number" class="ops-arith-input" id="mg-frac-den" min="1" step="1" inputmode="numeric" aria-label="Nazivnik umnoška">
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="mg-check" hidden>Provjeri</button>
+            <div class="feedback" id="mg-feedback"></div>
+            <div class="ops-arith-solution" id="mg-solution" hidden>
+              <p class="ops-arith-solution-title">Postupak rješavanja</p>
+              <div class="ops-arith-solution-steps" id="mg-solution-steps"></div>
+            </div>
+            <button type="button" class="btn btn-primary" id="mg-next" hidden>Sljedeći zadatak</button>
+          </div>
+        </div>
+        <div class="ops-panel" id="ops-div">
+          <div class="ops-arith-quiz card">
+            <p class="ops-arith-intro" id="div-intro">Zadana su dva razlomka — podijeli ih i upiši rezultat.</p>
+            <div class="ops-div-problem-wrap">
+              <div class="ops-arith-problem-row" id="div-problem">
+                <div class="ops-div-display-inline" id="div-display-inline">
+                  <div class="compare-frac-box">
+                    <span class="frac-stack" id="div-frac-a"></span>
+                  </div>
+                  <span class="ops-arith-op">÷</span>
+                  <div class="compare-frac-box">
+                    <span class="frac-stack" id="div-frac-b"></span>
+                  </div>
+                </div>
+                <div class="ops-div-display-compound" id="div-display-compound" hidden>
+                  <div class="ops-compound-frac" aria-label="Dvojni razlomak">
+                    <span class="frac-stack" id="div-compound-a"></span>
+                    <span class="ops-compound-main-bar" aria-hidden="true"></span>
+                    <span class="frac-stack" id="div-compound-b"></span>
+                  </div>
+                </div>
+                <span class="ops-arith-eq">=</span>
+                <div class="ops-arith-answer-box">
+                  <input type="number" class="ops-arith-input" id="div-ans-num" min="0" step="1" inputmode="numeric" aria-label="Brojnik odgovora">
+                  <span class="ops-arith-frac-line" aria-hidden="true"></span>
+                  <input type="number" class="ops-arith-input" id="div-ans-den" min="1" step="1" inputmode="numeric" aria-label="Nazivnik odgovora">
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="div-check">Provjeri</button>
+            <div class="feedback" id="div-feedback"></div>
+            <div class="ops-arith-solution" id="div-solution" hidden>
+              <p class="ops-arith-solution-title">Postupak rješavanja</p>
+              <div id="div-solution-steps"></div>
+            </div>
+            <button type="button" class="btn btn-primary" id="div-next" hidden>Sljedeći zadatak</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MJEŠOVITI BROJEVI -->
+      <section class="mode" id="mode-mixed">
+        <div class="mode-header">
+          <h2>Mješoviti brojevi</h2>
+          <p>Razlomci veći od 1 — cijeli dio i ostatak. Pretvaraj zapis, pa složi kriške na pizze.</p>
+        </div>
+        <div class="mixed-quiz card">
+          <p class="mixed-intro" id="mixed-intro">Zadan je mješoviti broj — upiši isti broj kao nepravi razlomak.</p>
+          <div class="mixed-problem-row" id="mixed-problem">
+            <div class="mixed-given mixed-given--mixed" id="mixed-given-mixed">
+              <div class="mixed-display" id="mixed-problem-display"></div>
+            </div>
+            <div class="mixed-given mixed-given--frac" id="mixed-given-frac" hidden>
+              <div class="compare-frac-box">
+                <span class="frac-stack" id="mixed-problem-frac"></span>
+              </div>
+            </div>
+            <span class="ops-arith-eq">=</span>
+            <div class="mixed-answer mixed-answer--improper" id="mixed-answer-improper">
+              <div class="ops-arith-answer-box">
+                <input type="number" class="ops-arith-input" id="mixed-imp-num" min="0" step="1" inputmode="numeric" aria-label="Brojnik odgovora">
+                <span class="ops-arith-frac-line" aria-hidden="true"></span>
+                <input type="number" class="ops-arith-input" id="mixed-imp-den" min="1" step="1" inputmode="numeric" aria-label="Nazivnik odgovora">
+              </div>
+            </div>
+            <div class="mixed-answer mixed-answer--mixed" id="mixed-answer-mixed" hidden>
+              <div class="mixed-answer-box">
+                <input type="number" class="ops-arith-input mixed-whole-input" id="mixed-mix-whole" min="0" step="1" inputmode="numeric" aria-label="Cijeli dio odgovora">
+                <div class="ops-arith-answer-box">
+                  <input type="number" class="ops-arith-input" id="mixed-mix-num" min="0" step="1" inputmode="numeric" aria-label="Brojnik razlomka odgovora">
+                  <span class="ops-arith-frac-line" aria-hidden="true"></span>
+                  <input type="number" class="ops-arith-input" id="mixed-mix-den" min="1" step="1" inputmode="numeric" aria-label="Nazivnik razlomka odgovora">
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" id="mixed-check">Provjeri</button>
+          <div class="feedback" id="mixed-feedback"></div>
+          <div class="ops-arith-solution" id="mixed-solution" hidden>
+            <p class="ops-arith-solution-title">Postupak rješavanja</p>
+            <p class="ops-arith-solution-text" id="mixed-solution-text"></p>
+          </div>
+          <button type="button" class="btn btn-primary" id="mixed-next" hidden>Sljedeći zadatak</button>
+        </div>
+
+        <div class="window-game pizza-game card" id="pizza-mixed-game">
+          <div class="visual-quiz-header">
+            <div>
+              <h3>Igra: kriške pizze</h3>
+              <p>Složi točan broj kriški na prazne pizze. Ima više pizza i kriški nego što treba.</p>
+            </div>
+          </div>
+          <p class="pg-question" id="pg-question"></p>
+          <p class="wg-hint" id="pg-slice-hint"></p>
+          <div class="pg-pizzas" id="pg-pizzas"></div>
+          <p class="wg-label">Kriške za slaganje</p>
+          <div class="pg-pool" id="pg-pool"></div>
+          <p class="pg-count" id="pg-count">Na pizzama: 0 kriški</p>
+          <p class="wg-hint">Povuci ili klikni krišku na pizzu. Klikni krišku na pizzi da je vratiš.</p>
+          <p class="pg-frac-q">Koji je to nepravi razlomak?</p>
+          <div class="ops-arith-answer-box pg-frac-box">
+            <input type="number" class="ops-arith-input" id="pg-frac-num" min="0" step="1" inputmode="numeric" aria-label="Brojnik nepravog razlomka">
+            <span class="ops-arith-frac-line" aria-hidden="true"></span>
+            <input type="number" class="ops-arith-input" id="pg-frac-den" min="1" step="1" inputmode="numeric" aria-label="Nazivnik nepravog razlomka">
+          </div>
+          <button type="button" class="btn btn-primary" id="pg-check">Provjeri</button>
+          <div class="feedback" id="pg-feedback"></div>
+          <div class="ops-arith-solution" id="pg-solution" hidden>
+            <p class="ops-arith-solution-title">Postupak rješavanja</p>
+            <div class="ops-arith-solution-steps" id="pg-solution-steps"></div>
+          </div>
+          <button type="button" class="btn btn-primary" id="pg-next" hidden>Sljedeći zadatak</button>
+        </div>
+      </section>
+
+      <!-- QUIZ MODE -->
+      <section class="mode" id="mode-quiz">
+        <div class="mode-header">
+          <h2>Kviz o razlomcima</h2>
+          <p>Deset interaktivnih zadataka — usporedba, računske operacije i mješoviti brojevi.</p>
+        </div>
+        <div class="quiz-layout card">
+          <div class="quiz-scoreboard">
+            <div class="score-item"><span class="score-label">Bodovi</span><span class="score-value" id="quiz-score">0</span></div>
+            <div class="score-item"><span class="score-label">Niz</span><span class="score-value" id="quiz-streak">0</span></div>
+            <div class="score-item"><span class="score-label">Pitanje</span><span class="score-value" id="quiz-number">1/10</span></div>
+          </div>
+          <p class="quiz-category" id="quiz-category"></p>
+
+          <div id="quiz-panel-compare" class="quiz-panel" hidden>
+            <p class="compare-intro">Usporedi razlomke — odaberi znak.</p>
+            <div class="compare-problem-row">
+              <div class="compare-frac-box">
+                <span class="frac-stack" id="quiz-cmp-a"></span>
+              </div>
+              <span class="compare-q" id="quiz-cmp-q">?</span>
+              <div class="compare-frac-box">
+                <span class="frac-stack" id="quiz-cmp-b"></span>
+              </div>
+            </div>
+            <div class="compare-guess-row">
+              <button type="button" class="vq-option quiz-cmp-btn" data-cmp="-1" aria-label="Manji">
+                <span class="cmp-guess-symbol">&lt;</span>
+              </button>
+              <button type="button" class="vq-option quiz-cmp-btn" data-cmp="0" aria-label="Jednaki">
+                <span class="cmp-guess-symbol">=</span>
+              </button>
+              <button type="button" class="vq-option quiz-cmp-btn" data-cmp="1" aria-label="Veći">
+                <span class="cmp-guess-symbol">&gt;</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="quiz-panel-ops" class="quiz-panel" hidden>
+            <p class="ops-arith-intro" id="quiz-ops-intro"></p>
+            <div class="ops-arith-problem-row">
+              <div class="compare-frac-box">
+                <span class="frac-stack" id="quiz-ops-a"></span>
+              </div>
+              <span class="ops-arith-op" id="quiz-ops-symbol">+</span>
+              <div class="compare-frac-box">
+                <span class="frac-stack" id="quiz-ops-b"></span>
+              </div>
+              <span class="ops-arith-eq">=</span>
+              <div class="ops-arith-answer-box">
+                <input type="number" class="ops-arith-input" id="quiz-ops-num" min="0" step="1" inputmode="numeric" aria-label="Brojnik odgovora">
+                <span class="ops-arith-frac-line" aria-hidden="true"></span>
+                <input type="number" class="ops-arith-input" id="quiz-ops-den" min="1" step="1" inputmode="numeric" aria-label="Nazivnik odgovora">
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="quiz-ops-check">Provjeri</button>
+          </div>
+
+          <div id="quiz-panel-mixed" class="quiz-panel" hidden>
+            <p class="mixed-intro" id="quiz-mixed-intro"></p>
+            <div class="mixed-problem-row">
+              <div class="mixed-given" id="quiz-mixed-given-mixed">
+                <div class="mixed-display" id="quiz-mixed-display"></div>
+              </div>
+              <div class="mixed-given" id="quiz-mixed-given-frac" hidden>
+                <div class="compare-frac-box">
+                  <span class="frac-stack" id="quiz-mixed-frac"></span>
+                </div>
+              </div>
+              <span class="ops-arith-eq">=</span>
+              <div id="quiz-mixed-answer-improper">
+                <div class="ops-arith-answer-box">
+                  <input type="number" class="ops-arith-input" id="quiz-mixed-imp-num" min="0" step="1" inputmode="numeric" aria-label="Brojnik odgovora">
+                  <span class="ops-arith-frac-line" aria-hidden="true"></span>
+                  <input type="number" class="ops-arith-input" id="quiz-mixed-imp-den" min="1" step="1" inputmode="numeric" aria-label="Nazivnik odgovora">
+                </div>
+              </div>
+              <div id="quiz-mixed-answer-mixed" hidden>
+                <div class="mixed-answer-box">
+                  <input type="number" class="ops-arith-input mixed-whole-input" id="quiz-mixed-whole" min="0" step="1" inputmode="numeric" aria-label="Cijeli dio odgovora">
+                  <div class="ops-arith-answer-box">
+                    <input type="number" class="ops-arith-input" id="quiz-mixed-num" min="0" step="1" inputmode="numeric" aria-label="Brojnik razlomka odgovora">
+                    <span class="ops-arith-frac-line" aria-hidden="true"></span>
+                    <input type="number" class="ops-arith-input" id="quiz-mixed-den" min="1" step="1" inputmode="numeric" aria-label="Nazivnik razlomka odgovora">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="quiz-mixed-check">Provjeri</button>
+          </div>
+
+          <div class="quiz-summary" id="quiz-summary" hidden>
+            <p class="quiz-summary-title">Statistika ovog kviza</p>
+            <ul class="quiz-summary-list" id="quiz-summary-list"></ul>
+          </div>
+
+          <div class="feedback" id="quiz-feedback"></div>
+          <div class="quiz-actions">
+            <button class="btn btn-primary" id="quiz-next" hidden>Sljedeće pitanje</button>
+            <button class="btn btn-secondary" id="quiz-restart" hidden>Igraj ponovo</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Autorica koda: Lana Batinić.</p>
+      <p>
+        Mentorica:
+        <a href="https://www.fer.unizg.hr/en/ana.zgaljic_keko" target="_blank" rel="noopener noreferrer">izv. prof. dr. sc. Ana Žgaljić Keko</a>.
+      </p>
+      <p>Izvorni kod dostupan je na GitHubu.</p>
+      <p>
+        Rad je razvijen kao završni rad na
+        <a href="https://www.fer.unizg.hr/" target="_blank" rel="noopener noreferrer">Fakultetu elektrotehnike i računarstva</a>.
+      </p>
+    </footer>
+  </div>
+
+  <script type="module" src="js/app.js?v=51"></script>
+</body>
+</html>
