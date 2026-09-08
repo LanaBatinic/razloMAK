@@ -107,6 +107,69 @@ export function fillTextWithFractions(el, text) {
   }
 }
 
+/** Poruka povratne informacije — razlomci n/n postaju okomiti */
+export function setFeedbackText(el, text) {
+  if (!el) return;
+  if (!text) {
+    el.textContent = '';
+    return;
+  }
+  if (/\d+\/\d+/.test(text)) {
+    fillTextWithFractions(el, text);
+  } else {
+    el.textContent = text;
+  }
+}
+
+const FORMULA_FRAC = /\((\d+)\/(\d+)\)|\(([^)]+)\)\/\(([^)]+)\)|\(([^)]+)\)\/(\d+)|(\d+)\/(\d+)/g;
+
+function formulaFracParts(match) {
+  if (match[1]) return [match[1], match[2]];
+  if (match[3]) return [match[3], match[4]];
+  if (match[5]) return [match[5], match[6]];
+  if (match[7]) return [match[7], match[8]];
+  return null;
+}
+
+function appendFormulaFracStack(parent, numText, denText) {
+  const stack = document.createElement('span');
+  stack.className = 'frac-stack frac-stack--formula';
+  const numEl = document.createElement('span');
+  numEl.className = 'frac-num';
+  numEl.textContent = numText;
+  const bar = document.createElement('span');
+  bar.className = 'frac-bar';
+  bar.setAttribute('aria-hidden', 'true');
+  const denEl = document.createElement('span');
+  denEl.className = 'frac-den';
+  denEl.textContent = denText;
+  stack.appendChild(numEl);
+  stack.appendChild(bar);
+  stack.appendChild(denEl);
+  parent.appendChild(stack);
+}
+
+/** Postupak rješavanja: (4/6), (20-3)/30, 3/5 itd. kao okomiti razlomci */
+export function fillFormulaWithFractions(el, text) {
+  if (!el) return;
+  el.replaceChildren();
+  el.classList.add('ops-formula-display');
+  let lastIndex = 0;
+  FORMULA_FRAC.lastIndex = 0;
+  let match;
+  while ((match = FORMULA_FRAC.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      el.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+    }
+    const parts = formulaFracParts(match);
+    if (parts) appendFormulaFracStack(el, parts[0], parts[1]);
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < text.length) {
+    el.appendChild(document.createTextNode(text.slice(lastIndex)));
+  }
+}
+
 export function toMixed(num, den) {
   const s = simplify(num, den);
   const negative = s.num < 0;
