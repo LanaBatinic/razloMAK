@@ -1,5 +1,7 @@
 /** Canvas drawing for pie, bar, number-line and mixed models — mak tema */
 
+import { lcm } from './fraction.js';
+
 const COLORS = {
   filled: '#c41e3a',
   filledAlt: '#40916c',
@@ -339,6 +341,103 @@ export function numberLineClickToIndex(canvas, clientX, clientY, den) {
 
   const idx = Math.round(frac * den);
   return Math.max(0, Math.min(den, idx));
+}
+
+const STRIP_UNIT_W = 120;
+const STRIP_H = 30;
+
+function createStripBar(num, den, color) {
+  const bar = document.createElement('div');
+  bar.className = 'strip-bar';
+  bar.style.width = `${STRIP_UNIT_W}px`;
+  bar.style.height = `${STRIP_H}px`;
+  bar.setAttribute('role', 'img');
+  bar.setAttribute('aria-label', `${num} od ${den} dijelova`);
+
+  for (let i = 0; i < den; i++) {
+    const seg = document.createElement('span');
+    seg.className = 'strip-seg';
+    if (i < num) {
+      seg.classList.add('is-filled');
+      seg.style.backgroundColor = color;
+    }
+    bar.appendChild(seg);
+  }
+  return bar;
+}
+
+function createStripOp(symbol) {
+  const op = document.createElement('span');
+  op.className = 'strip-op';
+  op.textContent = symbol;
+  op.setAttribute('aria-hidden', 'true');
+  return op;
+}
+
+function createStripSumBars(sumNum, commonDen, color) {
+  const wrap = document.createElement('div');
+  wrap.className = 'strip-sum';
+  const wholes = Math.floor(sumNum / commonDen);
+  const rem = sumNum % commonDen;
+
+  for (let w = 0; w < wholes; w++) {
+    wrap.appendChild(createStripBar(commonDen, commonDen, color));
+  }
+  if (rem > 0) {
+    wrap.appendChild(createStripBar(rem, commonDen, color));
+  }
+  if (wholes === 0 && rem === 0) {
+    wrap.appendChild(createStripBar(0, commonDen, color));
+  }
+  return wrap;
+}
+
+/**
+ * Vizualno objašnjenje zbrajanja — dva reda trakastog modela.
+ * 1. red: izvorni razlomci; 2. red: zajednički nazivnik i zbroj.
+ */
+export function renderAddStripModel(container, a, b) {
+  if (!container) return;
+  container.replaceChildren();
+
+  const common = lcm(a.den, b.den);
+  const n1 = a.num * (common / a.den);
+  const n2 = b.num * (common / b.den);
+  const sum = n1 + n2;
+  const colorA = COLORS.filled;
+  const colorB = COLORS.filledAlt;
+  const colorSum = '#b85c38';
+
+  const model = document.createElement('div');
+  model.className = 'add-strip-model';
+
+  const row1Label = document.createElement('p');
+  row1Label.className = 'add-strip-row-label';
+  row1Label.textContent = 'Izvorni razlomci';
+
+  const row1 = document.createElement('div');
+  row1.className = 'add-strip-row';
+  row1.appendChild(createStripBar(a.num, a.den, colorA));
+  row1.appendChild(createStripOp('+'));
+  row1.appendChild(createStripBar(b.num, b.den, colorB));
+
+  const row2Label = document.createElement('p');
+  row2Label.className = 'add-strip-row-label';
+  row2Label.textContent = `Zajednički nazivnik (${common} dijelova)`;
+
+  const row2 = document.createElement('div');
+  row2.className = 'add-strip-row';
+  row2.appendChild(createStripBar(n1, common, colorA));
+  row2.appendChild(createStripOp('+'));
+  row2.appendChild(createStripBar(n2, common, colorB));
+  row2.appendChild(createStripOp('='));
+  row2.appendChild(createStripSumBars(sum, common, colorSum));
+
+  model.appendChild(row1Label);
+  model.appendChild(row1);
+  model.appendChild(row2Label);
+  model.appendChild(row2);
+  container.appendChild(model);
 }
 
 export { COLORS };
