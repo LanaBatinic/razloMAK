@@ -2,6 +2,7 @@ import {
   lcm,
   fracParen,
   fillTextWithFractions,
+  fillFormulaWithFractions,
 } from './fraction.js';
 import {
   amountOf,
@@ -117,7 +118,7 @@ export function initWindowCompareGame() {
     fillTextWithFractions(p, intro);
     const f = document.createElement('p');
     f.className = 'ops-arith-solution-text';
-    fillTextWithFractions(f, formula);
+    fillFormulaWithFractions(f, formula);
     step.append(p, f);
     stepsEl.appendChild(step);
   }
