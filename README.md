@@ -9,8 +9,6 @@ Web aplikacija za učenje razlomaka. Pokriva česte miskoncepcije: razlomak kao 
 - **Kviz** — 10 pitanja, po jedno iz svake kategorije
 
 
-> **Napomena:** ES moduli moraju se učitavati preko HTTP-a (ne `file://`). Koristi naredbu iznad ili Cursor Live Server.
-
 ## Struktura projekta
 
 ```
