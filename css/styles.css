@@ -289,7 +289,7 @@ body {
   background: #fff;
   font-family: var(--mono);
   font-size: 1.75rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--mak-petal);
   text-align: center;
 }
@@ -331,6 +331,93 @@ body {
   word-break: break-word;
 }
 
+.ops-formula-display {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.15rem 0.35rem;
+}
+
+/* Zbrajanje — trakasti model u postupku */
+.add-strip-model-wrap {
+  margin-bottom: 1rem;
+}
+
+.add-strip-model {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.add-strip-row-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--mak-stem);
+  text-align: center;
+  margin: 0.5rem 0 0.15rem;
+}
+
+.add-strip-row-label:first-child {
+  margin-top: 0;
+}
+
+.add-strip-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0.35rem 0;
+}
+
+.strip-bar {
+  display: flex;
+  border: 2px solid #3d342c;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #f0ebe3;
+  flex-shrink: 0;
+}
+
+.strip-seg {
+  flex: 1 1 0;
+  min-width: 0;
+  border-right: 1px solid rgba(61, 52, 44, 0.22);
+}
+
+.strip-seg:last-child {
+  border-right: none;
+}
+
+.strip-op {
+  font-family: var(--mono);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--mak-petal);
+  line-height: 1;
+  padding: 0 0.1rem;
+}
+
+.strip-sum {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.frac-stack--formula .frac-num,
+.frac-stack--formula .frac-den {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.frac-stack--formula .frac-bar {
+  min-width: 1.25em;
+  background: var(--text);
+}
+
 #add-check,
 #sub-check,
 #mul-check,
@@ -365,6 +452,7 @@ body {
 .window-game .visual-quiz-header {
   justify-content: center;
 }
+
 .window-game .visual-quiz-header > div {
   width: 100%;
   text-align: center;
@@ -460,7 +548,7 @@ body {
 .wg-count {
   margin-top: 0.65rem;
   font-family: var(--mono);
-  font-weight: 600;
+  font-weight: 400;
   color: var(--secondary);
 }
 
@@ -628,6 +716,82 @@ body {
   margin: 1rem auto 0;
 }
 
+/* Flower addition game */
+.fag-arena {
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.fag-table-wrap {
+  min-width: 0;
+}
+
+.fag-table {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  align-content: flex-start;
+  min-height: 9rem;
+  padding: 0.75rem 0.55rem 0.9rem;
+  background:
+    linear-gradient(180deg, #f8efe4 0%, #e8d5c0 55%, #d4b896 100%);
+  border: 3px solid #b8956a;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.45);
+}
+
+.fag-pool-wrap {
+  min-width: 0;
+}
+
+.fag-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  align-content: flex-start;
+  padding: 0.85rem;
+  background: linear-gradient(180deg, #f4f8ea 0%, #e7f0d4 100%);
+  border: 2px dashed rgba(45, 106, 79, 0.35);
+  border-radius: var(--radius-sm);
+  min-height: 9rem;
+}
+
+.fag-count {
+  margin-top: 0.65rem;
+  font-family: var(--mono);
+  font-weight: 400;
+  color: var(--secondary);
+  font-size: 0.92rem;
+}
+
+#flower-add-game.is-done .fg-flower {
+  cursor: default;
+}
+
+#flower-add-game.is-correct .fag-table .fg-flower {
+  box-shadow: 0 0 0 2px rgba(64, 145, 108, 0.35);
+}
+
+#flower-add-game.is-wrong .fag-table .fg-flower {
+  box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.28);
+}
+
+#fag-check,
+#fag-next {
+  display: block;
+  margin: 0 auto;
+}
+
+#fag-next {
+  margin-top: 1rem;
+}
+
 /* Flower subtraction game */
 .fg-arena {
   display: grid;
@@ -684,7 +848,7 @@ body {
 .fg-count {
   margin-top: 0.55rem;
   font-family: var(--mono);
-  font-weight: 600;
+  font-weight: 400;
   color: var(--secondary);
   font-size: 0.92rem;
 }
@@ -868,7 +1032,7 @@ body {
 .mixed-whole {
   font-family: var(--mono);
   font-size: 3.25rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--mak-petal);
   line-height: 1;
 }
@@ -986,7 +1150,7 @@ body {
 .frac-num,
 .frac-den {
   font-family: var(--mono);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.05;
 }
 
@@ -1038,7 +1202,7 @@ body {
 .frac-stack--whole {
   font-family: var(--mono);
   font-size: 3rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--mak-petal);
 }
 
@@ -1073,7 +1237,7 @@ body {
   width: 2rem;
   text-align: center;
   font-family: var(--mono);
-  font-weight: 500;
+  font-weight: 400;
   color: var(--mak-stem);
 }
 
@@ -1186,7 +1350,7 @@ body {
 
 .vq-target {
   color: var(--mak-petal);
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .visual-quiz-options {
@@ -1633,7 +1797,7 @@ ol[hidden],
 }
 
 .steps-list li:last-child {
-  font-weight: 600;
+  font-weight: 400;
   color: var(--success);
 }
 
@@ -1741,7 +1905,7 @@ ol[hidden],
 .score-value {
   font-family: var(--mono);
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--mak-petal);
 }
 
@@ -1962,6 +2126,24 @@ ol[hidden],
   color: var(--error);
 }
 
+.feedback .frac-stack {
+  display: inline-flex;
+  vertical-align: middle;
+  color: inherit;
+  margin: 0 0.12em;
+}
+
+.feedback .frac-stack .frac-num,
+.feedback .frac-stack .frac-den {
+  font-size: 0.9em;
+  line-height: 1;
+}
+
+.feedback .frac-stack .frac-bar {
+  min-width: 1.1em;
+  background: currentColor;
+}
+
 .btn {
   font-family: var(--font);
   font-size: 0.95rem;
@@ -2075,7 +2257,7 @@ ol[hidden],
 .cq-count {
   text-align: center;
   font-family: var(--mono);
-  font-weight: 600;
+  font-weight: 400;
   color: var(--secondary);
   margin-bottom: 0.25rem;
 }
@@ -2209,7 +2391,7 @@ ol[hidden],
 
 .pg-count {
   font-family: var(--mono);
-  font-weight: 600;
+  font-weight: 400;
   color: var(--secondary);
   margin-bottom: 0.35rem;
 }
@@ -2251,7 +2433,7 @@ ol[hidden],
 .mg-step {
   text-align: center;
   font-size: 1.15rem;
-  font-weight: 600;
+  font-weight: 400;
   margin: 0 0 0.85rem;
 }
 
@@ -2305,7 +2487,7 @@ ol[hidden],
 .mg-count {
   text-align: center;
   font-family: var(--mono);
-  font-weight: 600;
+  font-weight: 400;
   color: var(--secondary);
   font-size: 0.95rem;
   margin-bottom: 0.45rem;
@@ -2482,6 +2664,10 @@ ol[hidden],
   }
 
   .wg-arena {
+    grid-template-columns: 1fr;
+  }
+
+  .fag-arena {
     grid-template-columns: 1fr;
   }
 
