@@ -2,6 +2,7 @@ import {
   lcm,
   fracParen,
   fillTextWithFractions,
+  fillFormulaWithFractions,
 } from './fraction.js';
 import { amountOf } from './window-game.js?v=3';
 
@@ -116,7 +117,7 @@ export function initFlowerSubGame() {
     fillTextWithFractions(p, intro);
     const f = document.createElement('p');
     f.className = 'ops-arith-solution-text';
-    fillTextWithFractions(f, formula);
+    fillFormulaWithFractions(f, formula);
     step.append(p, f);
     stepsEl.appendChild(step);
   }
