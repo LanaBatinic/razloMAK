@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=46">
+  <link rel="stylesheet" href="css/styles.css?v=52">
 </head>
 <body>
   <div class="field-bg" aria-hidden="true">
@@ -306,6 +306,7 @@
             <div class="feedback" id="add-feedback"></div>
             <div class="ops-arith-solution" id="add-solution" hidden>
               <p class="ops-arith-solution-title">Postupak rješavanja</p>
+              <div id="add-solution-strips" class="add-strip-model-wrap"></div>
               <p class="ops-arith-solution-text" id="add-solution-text"></p>
             </div>
             <button type="button" class="btn btn-primary" id="add-next" hidden>Sljedeći zadatak</button>
@@ -344,6 +345,35 @@
               <div class="ops-arith-solution-steps" id="wg-solution-steps"></div>
             </div>
             <button type="button" class="btn btn-primary" id="wg-next" hidden>Sljedeći zadatak</button>
+          </div>
+
+          <div class="window-game flower-game card" id="flower-add-game">
+            <div class="visual-quiz-header">
+              <div>
+                <h3>Igra: cvjetovi maka</h3>
+                <p>Izračunaj koliko cvjetova zajedno donesu, pa ih prenesi na stol.</p>
+              </div>
+            </div>
+            <p class="wg-story" id="fag-story"></p>
+            <div class="fag-arena">
+              <div class="fag-table-wrap">
+                <p class="wg-label">Stol</p>
+                <div class="fag-table" id="fag-table"></div>
+                <p class="fag-count" id="fag-count">Na stolu: 0 cvjetova</p>
+              </div>
+              <div class="fag-pool-wrap">
+                <p class="wg-label">Cvjetovi</p>
+                <div class="fag-pool" id="fag-pool"></div>
+              </div>
+            </div>
+            <p class="wg-hint">Povuci ili klikni cvijet da ga preneseš na stol. Klikni ponovo da ga vratiš.</p>
+            <button type="button" class="btn btn-primary" id="fag-check">Provjeri</button>
+            <div class="feedback" id="fag-feedback"></div>
+            <div class="ops-arith-solution" id="fag-solution" hidden>
+              <p class="ops-arith-solution-title">Postupak rješavanja</p>
+              <div class="ops-arith-solution-steps" id="fag-solution-steps"></div>
+            </div>
+            <button type="button" class="btn btn-primary" id="fag-next" hidden>Sljedeći zadatak</button>
           </div>
         </div>
         <div class="ops-panel" id="ops-sub">
@@ -697,7 +727,6 @@
         Mentorica:
         <a href="https://www.fer.unizg.hr/en/ana.zgaljic_keko" target="_blank" rel="noopener noreferrer">izv. prof. dr. sc. Ana Žgaljić Keko</a>.
       </p>
-      <!-- <p>Izvorni kod dostupan je na GitHubu.</p>-->
       <p>Izvorni kod dostupan je na <a href="https://github.com/LanaBatinic/razloMAK" target="_blank" rel="noopener noreferrer">GitHubu</a>.</p>
       <p>
         Rad je razvijen kao završni rad na
@@ -706,6 +735,6 @@
     </footer>
   </div>
 
-  <script type="module" src="js/app.js?v=51"></script>
+  <script type="module" src="js/app.js?v=55"></script>
 </body>
 </html>
