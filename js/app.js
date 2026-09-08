@@ -5,7 +5,8 @@ import {
   renderFracStack,
   setFracStack,
   setMixedDisplay,
-  fillTextWithFractions,
+  setFeedbackText,
+  fillFormulaWithFractions,
   fromMixed,
   isValidMixedAnswer,
   mixedAnswerMatchesImproper,
@@ -23,13 +24,14 @@ import {
   simplify,
   shuffle,
 } from './fraction.js';
-import { drawPie, drawBar, drawMixedPies, drawNumberLine, drawTwoPies, drawBarsDifferentWholes, COLORS } from './visual.js?v=29';
+import { drawPie, drawBar, drawMixedPies, drawNumberLine, drawTwoPies, drawBarsDifferentWholes, renderAddStripModel, COLORS } from './visual.js?v=31';
 import { initWindowAddGame } from './window-game.js?v=3';
+import { initFlowerAddGame } from './flower-add-game.js?v=1';
 import { initWindowCompareGame } from './window-compare-game.js?v=1';
 import { initFlowerSubGame } from './flower-sub-game.js?v=2';
-import { initCandyQuiz } from './candy-quiz.js?v=1';
-import { initPizzaMixedGame } from './pizza-mixed-game.js?v=3';
-import { initMulGardenGame } from './mul-garden-game.js?v=1';
+import { initCandyQuiz } from './candy-quiz.js?v=2';
+import { initPizzaMixedGame } from './pizza-mixed-game.js?v=4';
+import { initMulGardenGame } from './mul-garden-game.js?v=2';
 
 // ─── Navigation ───────────────────────────────────────────────
 
@@ -192,7 +194,7 @@ function handleVisualQuizAnswer(btn, opt) {
   if (opt.correct) {
     btn.classList.add('correct');
     vqState.correct += 1;
-    feedback.textContent = `Točno! ${num}/${den} je jedan broj: ${num} od ${den} jednakih dijelova iste cjeline.`;
+    setFeedbackText(feedback, `Točno! ${num}/${den} je jedan broj: ${num} od ${den} jednakih dijelova iste cjeline.`);
     feedback.className = 'feedback success';
   } else {
     btn.classList.add('wrong');
@@ -238,7 +240,7 @@ function renderNumberLineQuiz() {
     const major = i === 0 || i === den;
     svg += `<line x1="${x}" y1="${y - (major ? 12 : 7)}" x2="${x}" y2="${y + (major ? 12 : 7)}" stroke="${major ? '#3d342c' : '#c8bdb0'}" stroke-width="${major ? 2.5 : 1.25}"/>`;
     if (major) {
-      svg += `<text x="${x}" y="${y + 32}" text-anchor="middle" fill="#3d342c" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">${i === 0 ? '0' : '1'}</text>`;
+      svg += `<text x="${x}" y="${y + 32}" text-anchor="middle" fill="#3d342c" font-family="JetBrains Mono, monospace" font-size="13" font-weight="400">${i === 0 ? '0' : '1'}</text>`;
     }
   }
 
@@ -316,10 +318,10 @@ function checkNumberLineQuiz() {
 
   if (correct) {
     nlState.correct += 1;
-    feedback.textContent = `Točno! ${num}/${den} je ${num} korak${num === 1 ? '' : 'a'} od 0 prema 1 (ukupno ${den} jednakih dijelova).`;
+    setFeedbackText(feedback, `Točno! ${num}/${den} je ${num} korak${num === 1 ? '' : 'a'} od 0 prema 1 (ukupno ${den} jednakih dijelova).`);
     feedback.className = 'feedback success';
   } else {
-    feedback.textContent = `Nije točno. ${num}/${den} je na ${num}. koraku od ${den} jednakih dijelova (ne ${nlState.userIdx}/${den}).`;
+    setFeedbackText(feedback, `Nije točno. ${num}/${den} je na ${num}. koraku od ${den} jednakih dijelova (ne ${nlState.userIdx}/${den}).`);
     feedback.className = 'feedback error';
     renderNumberLineQuiz();
   }
@@ -435,11 +437,11 @@ document.querySelectorAll('.cmp-guess-btn').forEach((btn) => {
 
     if (guess === cmp) {
       btn.classList.add('correct');
-      feedback.textContent = `Točno! ${explainCompare(a, b, cmp)}`;
+      setFeedbackText(feedback, `Točno! ${explainCompare(a, b, cmp)}`);
       feedback.className = 'feedback success';
     } else {
       btn.classList.add('wrong');
-      feedback.textContent = `Nije točno. ${explainCompare(a, b, cmp)}`;
+      setFeedbackText(feedback, `Nije točno. ${explainCompare(a, b, cmp)}`);
       feedback.className = 'feedback error';
     }
 
@@ -694,7 +696,7 @@ function recordQuizResult(wasCorrect, feedbackText) {
     document.getElementById('quiz-feedback').className = 'feedback error';
   }
 
-  fillTextWithFractions(document.getElementById('quiz-feedback'), feedbackText);
+  setFeedbackText(document.getElementById('quiz-feedback'), feedbackText);
   updateQuizScoreboard();
   document.getElementById('quiz-next').hidden = false;
 }
@@ -971,11 +973,20 @@ function hideAddNext() {
 }
 
 function showAddSolution() {
-  document.getElementById('add-solution-text').textContent = buildAddSolutionText(addState.a, addState.b);
+  renderAddStripModel(
+    document.getElementById('add-solution-strips'),
+    addState.a,
+    addState.b
+  );
+  fillFormulaWithFractions(
+    document.getElementById('add-solution-text'),
+    buildAddSolutionText(addState.a, addState.b)
+  );
   document.getElementById('add-solution').hidden = false;
 }
 
 function hideAddSolution() {
+  document.getElementById('add-solution-strips').replaceChildren();
   document.getElementById('add-solution').hidden = true;
 }
 
@@ -1040,7 +1051,7 @@ function checkAddAnswer() {
 
   if (fractionsEqual(user.num, user.den, result.num, result.den)) {
     if (isFullySimplified(user.num, user.den)) {
-      feedback.textContent = `Točno! ${fracParen(a.num, a.den)} + ${fracParen(b.num, b.den)} = ${formatFractionParen(result.num, result.den)}.`;
+      setFeedbackText(feedback, `Točno! ${fracParen(a.num, a.den)} + ${fracParen(b.num, b.den)} = ${formatFractionParen(result.num, result.den)}.`);
       feedback.className = 'feedback success';
       finishAddProblem();
     } else {
@@ -1072,6 +1083,7 @@ document.getElementById('add-ans-den').addEventListener('keydown', (e) => {
 });
 generateAddProblem();
 initWindowAddGame();
+initFlowerAddGame();
 
 // ─── Ops: Oduzimanje ──────────────────────────────────────────
 
@@ -1125,8 +1137,35 @@ function hideSubNext() {
   nextBtn.setAttribute('hidden', '');
 }
 
+function mountSolutionSteps(container, steps) {
+  container.replaceChildren();
+  steps.forEach((step, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'ops-arith-solution-step';
+    const label = document.createElement('p');
+    label.className = 'ops-arith-solution-label';
+    if (steps.length > 1) {
+      const strong = document.createElement('strong');
+      strong.textContent = `${i + 1}.`;
+      label.appendChild(strong);
+      label.appendChild(document.createTextNode(` ${step.intro}`));
+    } else {
+      label.textContent = step.intro;
+    }
+    const formula = document.createElement('p');
+    formula.className = 'ops-arith-solution-text';
+    fillFormulaWithFractions(formula, step.formula);
+    wrap.appendChild(label);
+    wrap.appendChild(formula);
+    container.appendChild(wrap);
+  });
+}
+
 function showSubSolution() {
-  document.getElementById('sub-solution-text').textContent = buildSubSolutionText(subState.a, subState.b);
+  fillFormulaWithFractions(
+    document.getElementById('sub-solution-text'),
+    buildSubSolutionText(subState.a, subState.b)
+  );
   document.getElementById('sub-solution').hidden = false;
 }
 
@@ -1195,7 +1234,7 @@ function checkSubAnswer() {
 
   if (fractionsEqual(user.num, user.den, result.num, result.den)) {
     if (isFullySimplified(user.num, user.den)) {
-      feedback.textContent = `Točno! ${fracParen(a.num, a.den)} − ${fracParen(b.num, b.den)} = ${formatFractionParen(result.num, result.den)}.`;
+      setFeedbackText(feedback, `Točno! ${fracParen(a.num, a.den)} − ${fracParen(b.num, b.den)} = ${formatFractionParen(result.num, result.den)}.`);
       feedback.className = 'feedback success';
       finishSubProblem();
     } else {
@@ -1306,17 +1345,7 @@ function hideMulNext() {
 }
 
 function showMulSolution() {
-  const steps = buildMulSolutionSteps(mulState.a, mulState.b);
-  const container = document.getElementById('mul-solution-steps');
-  container.innerHTML = steps
-    .map(
-      (step, i) => `
-        <div class="ops-arith-solution-step">
-          <p class="ops-arith-solution-label">${steps.length > 1 ? `<strong>${i + 1}.</strong> ` : ''}${step.intro}</p>
-          <p class="ops-arith-solution-text">${step.formula}</p>
-        </div>`
-    )
-    .join('');
+  mountSolutionSteps(document.getElementById('mul-solution-steps'), buildMulSolutionSteps(mulState.a, mulState.b));
   document.getElementById('mul-solution').hidden = false;
 }
 
@@ -1395,7 +1424,7 @@ function checkMulAnswer() {
 
   if (fractionsEqual(user.num, user.den, result.num, result.den)) {
     if (isFullySimplified(user.num, user.den)) {
-      feedback.textContent = `Točno! ${fracParen(a.num, a.den)} × ${fracParen(b.num, b.den)} = ${formatFractionParen(result.num, result.den)}.`;
+      setFeedbackText(feedback, `Točno! ${fracParen(a.num, a.den)} × ${fracParen(b.num, b.den)} = ${formatFractionParen(result.num, result.den)}.`);
       feedback.className = 'feedback success';
       finishMulProblem();
     } else {
@@ -1526,17 +1555,10 @@ function hideDivNext() {
 }
 
 function showDivSolution() {
-  const steps = buildDivSolutionSteps(divState.a, divState.b, divState.format);
-  const container = document.getElementById('div-solution-steps');
-  container.innerHTML = steps
-    .map(
-      (step, i) => `
-        <div class="ops-arith-solution-step">
-          <p class="ops-arith-solution-label">${steps.length > 1 ? `<strong>${i + 1}.</strong> ` : ''}${step.intro}</p>
-          <p class="ops-arith-solution-text">${step.formula}</p>
-        </div>`
-    )
-    .join('');
+  mountSolutionSteps(
+    document.getElementById('div-solution-steps'),
+    buildDivSolutionSteps(divState.a, divState.b, divState.format)
+  );
   document.getElementById('div-solution').hidden = false;
 }
 
@@ -1621,7 +1643,7 @@ function checkDivAnswer() {
 
   if (fractionsEqual(user.num, user.den, result.num, result.den)) {
     if (isFullySimplified(user.num, user.den)) {
-      feedback.textContent = `Točno! ${divProblemText(a, b, divState.format)} = ${formatFractionParen(result.num, result.den)}.`;
+      setFeedbackText(feedback, `Točno! ${divProblemText(a, b, divState.format)} = ${formatFractionParen(result.num, result.den)}.`);
       feedback.className = 'feedback success';
       finishDivProblem();
     } else {
@@ -1707,7 +1729,7 @@ function hideMixedNext() {
 }
 
 function showMixedSolution(text) {
-  document.getElementById('mixed-solution-text').textContent = text;
+  fillFormulaWithFractions(document.getElementById('mixed-solution-text'), text);
   document.getElementById('mixed-solution').hidden = false;
 }
 
@@ -1829,7 +1851,7 @@ function checkMixedAnswer() {
     }
 
     if (fractionsEqual(user.num, user.den, task.improperNum, task.improperDen)) {
-      feedback.textContent = `Točno! ${task.whole} ${task.num}/${task.den} = ${formatFraction(task.improperNum, task.improperDen)}.`;
+      setFeedbackText(feedback, `Točno! ${task.whole} ${task.num}/${task.den} = ${formatFraction(task.improperNum, task.improperDen)}.`);
       feedback.className = 'feedback success';
       finishMixedProblem();
       return;
@@ -1862,7 +1884,7 @@ function checkMixedAnswer() {
     const canonical = formatMixed(task.improperNum, task.improperDen);
 
     if (mixedAnswerMatchesImproper(user.whole, user.num, user.den, task.improperNum, task.improperDen)) {
-      feedback.textContent = `Točno! ${formatFraction(task.improperNum, task.improperDen)} = ${canonical}.`;
+      setFeedbackText(feedback, `Točno! ${formatFraction(task.improperNum, task.improperDen)} = ${canonical}.`);
       feedback.className = 'feedback success';
       finishMixedProblem();
       return;
