@@ -1,4 +1,4 @@
-import { fillTextWithFractions } from './fraction.js';
+import { fillTextWithFractions, fillFormulaWithFractions, setFeedbackText } from './fraction.js';
 import { amountOf, gridFor } from './window-game.js?v=3';
 
 const PROBLEMS = [
@@ -83,7 +83,7 @@ export function initCandyQuiz() {
     fillTextWithFractions(p, intro);
     const f = document.createElement('p');
     f.className = 'ops-arith-solution-text';
-    fillTextWithFractions(f, formula);
+    fillFormulaWithFractions(f, formula);
     step.append(p, f);
     stepsEl.appendChild(step);
   }
@@ -149,7 +149,7 @@ export function initCandyQuiz() {
     if (ok) {
       state.correct += 1;
       root.classList.add('is-correct');
-      feedbackEl.textContent = `Točno! ${candyCountLabel(state.target)} je ${state.problem.num}/${state.problem.den} od ${state.problem.total}.`;
+      setFeedbackText(feedbackEl, `Točno! ${candyCountLabel(state.target)} je ${state.problem.num}/${state.problem.den} od ${state.problem.total}.`);
       feedbackEl.className = 'feedback success';
     } else {
       root.classList.add('is-wrong');
