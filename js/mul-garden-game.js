@@ -1,9 +1,11 @@
 import {
   fillTextWithFractions,
+  fillFormulaWithFractions,
   fractionsEqual,
   multiplyFractions,
   formatFractionParen,
   fracParen,
+  setFeedbackText,
   shuffle,
 } from './fraction.js';
 import { amountOf } from './window-game.js?v=3';
@@ -95,7 +97,7 @@ export function initMulGardenGame() {
     fillTextWithFractions(p, intro);
     const f = document.createElement('p');
     f.className = 'ops-arith-solution-text';
-    fillTextWithFractions(f, formula);
+    fillFormulaWithFractions(f, formula);
     step.append(p, f);
     stepsEl.appendChild(step);
   }
@@ -234,7 +236,7 @@ export function initMulGardenGame() {
       return;
     }
     const { total, of } = state.problem;
-    feedbackEl.textContent = `Nije točno. Treba označiti ${flowerCountLabel(state.firstTarget)} — to je ${of.num}/${of.den} od ${total}. Pokušaj ponovo.`;
+    setFeedbackText(feedbackEl, `Nije točno. Treba označiti ${flowerCountLabel(state.firstTarget)} — to je ${of.num}/${of.den} od ${total}. Pokušaj ponovo.`);
     feedbackEl.className = 'feedback error';
   }
 
@@ -274,7 +276,7 @@ export function initMulGardenGame() {
       const fracLine = fracOk
         ? 'Umnožak je točan.'
         : `Umnožak je ${result.num}/${result.den}.`;
-      feedbackEl.textContent = `Nije točno. ${flowerLine} ${fracLine}`;
+      setFeedbackText(feedbackEl, `Nije točno. ${flowerLine} ${fracLine}`);
       feedbackEl.className = 'feedback error';
     }
   }
