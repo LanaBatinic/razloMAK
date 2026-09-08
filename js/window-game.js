@@ -4,6 +4,7 @@ import {
   formatFractionParen,
   fracParen,
   fillTextWithFractions,
+  fillFormulaWithFractions,
 } from './fraction.js';
 
 const PROBLEMS = [
@@ -107,7 +108,7 @@ export function initWindowAddGame() {
     fillTextWithFractions(p, intro);
     const f = document.createElement('p');
     f.className = 'ops-arith-solution-text';
-    fillTextWithFractions(f, formula);
+    fillFormulaWithFractions(f, formula);
     step.append(p, f);
     stepsEl.appendChild(step);
   }
