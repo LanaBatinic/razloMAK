@@ -1,7 +1,9 @@
 import {
   fillTextWithFractions,
+  fillFormulaWithFractions,
   setMixedDisplay,
   fractionsEqual,
+  setFeedbackText,
   shuffle,
 } from './fraction.js';
 
@@ -162,7 +164,7 @@ export function initPizzaMixedGame() {
     fillTextWithFractions(p, intro);
     const f = document.createElement('p');
     f.className = 'ops-arith-solution-text';
-    fillTextWithFractions(f, formula);
+    fillFormulaWithFractions(f, formula);
     step.append(p, f);
     stepsEl.appendChild(step);
   }
@@ -264,7 +266,7 @@ export function initPizzaMixedGame() {
 
     if (slicesOk && fracOk) {
       root.classList.add('is-correct');
-      feedbackEl.textContent = `Točno! ${sliceCountLabel(state.target)}, to je ${state.target}/${state.den}.`;
+      setFeedbackText(feedbackEl, `Točno! ${sliceCountLabel(state.target)}, to je ${state.target}/${state.den}.`);
       feedbackEl.className = 'feedback success';
     } else {
       root.classList.add('is-wrong');
@@ -274,7 +276,7 @@ export function initPizzaMixedGame() {
       const fracLine = fracOk
         ? `Nepravi razlomak je točan.`
         : `Nepravi razlomak je ${state.target}/${state.den}.`;
-      feedbackEl.textContent = `Nije točno. ${sliceLine} ${fracLine}`;
+      setFeedbackText(feedbackEl, `Nije točno. ${sliceLine} ${fracLine}`);
       feedbackEl.className = 'feedback error';
     }
   }
