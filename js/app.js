@@ -896,7 +896,8 @@ function checkQuizMixedAnswer() {
 }
 
 function finishQuiz() {
-  const pct = Math.round((quizState.score / (QUIZ_TOTAL * 10)) * 100);
+  const correct = Object.values(quizState.stats).reduce((n, s) => n + s.correct, 0);
+  const pct = Math.round((correct / QUIZ_TOTAL) * 100);
   const categoryFeedback = buildQuizCategoryFeedback(quizState.stats);
 
   hideAllQuizPanels();
