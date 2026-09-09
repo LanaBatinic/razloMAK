@@ -8,6 +8,7 @@ import {
   setFeedbackText,
   fillFormulaWithFractions,
   fromMixed,
+  toMixed,
   isValidMixedAnswer,
   mixedAnswerMatchesImproper,
   formatMixed,
@@ -100,7 +101,26 @@ function updateVisual() {
     renderFracStack(simplifiedEl, simplified.num, simplified.den);
     simplifiedEl.classList.add('stat-value');
   }
-  document.getElementById('visual-mixed').textContent = formatMixed(num, den);
+  const mixedEl = document.getElementById('visual-mixed');
+  const mixed = toMixed(num, den);
+  mixedEl.replaceChildren();
+  mixedEl.className = 'stat-value';
+  if (mixed.num === 0) {
+    mixedEl.textContent = String(mixed.whole);
+  } else if (mixed.whole === 0) {
+    renderFracStack(mixedEl, mixed.num, mixed.den);
+    mixedEl.classList.add('stat-value');
+  } else {
+    mixedEl.classList.add('stat-mixed');
+    const wholeEl = document.createElement('span');
+    wholeEl.className = 'stat-mixed-whole';
+    wholeEl.textContent = String(mixed.whole);
+    const stack = document.createElement('span');
+    renderFracStack(stack, mixed.num, mixed.den);
+    mixedEl.appendChild(wholeEl);
+    mixedEl.appendChild(stack);
+    mixedEl.setAttribute('aria-label', `${mixed.whole} ${mixed.num}/${mixed.den}`);
+  }
 
   drawMixedPies(pieCanvas, num, den);
   drawBar(barCanvas, num, den);
