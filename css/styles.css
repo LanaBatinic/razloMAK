@@ -1251,6 +1251,7 @@ body {
 .stat {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0.6rem 0.85rem;
   background: var(--surface-alt);
   border-radius: var(--radius-sm);
@@ -1263,9 +1264,26 @@ body {
 }
 
 .stat-value.frac-stack .frac-num,
-.stat-value.frac-stack .frac-den {
+.stat-value.frac-stack .frac-den,
+.stat-mixed .frac-stack .frac-num,
+.stat-mixed .frac-stack .frac-den {
   font-size: 1.25rem;
   color: var(--text);
+}
+
+.stat-mixed {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.stat-mixed-whole {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--text);
+  line-height: 1;
 }
 
 .stat-value {
